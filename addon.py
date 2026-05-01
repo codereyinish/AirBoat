@@ -34,7 +34,7 @@ class AirboatAddon:
                 while "\n\n" in buf:
                     event_text , buf = buf.split("\n\n", 1)
                     addon._process_event(event_text)
-                yield chunk
+                yield chunk #we dont want to pause the claude tab(dont want to hack the safari lol)
 
         return handler
 
