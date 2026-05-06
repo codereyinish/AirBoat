@@ -113,9 +113,13 @@ class AirboatWindow:
                                 tell t
                                     do JavaScript "
                                         var text = atob('{b64_prompt}');
-                                        var el = document.querySelector('div[contenteditable]');
-                                        el.focus();
-                                        document.execCommand('insertText', false, text);
+                                        var el = document.querySelector('[data-testid=chat-input]')
+                                            || document.querySelector('[aria-label=\\"Write your prompt to Claude\\"]')
+                                            || document.querySelector('[contenteditable=true]');
+                                        if (el) {{
+                                            el.focus();
+                                            document.execCommand('insertText', false, text);
+                                        }}
                                     "
                                 end tell
                             end if
@@ -145,7 +149,7 @@ class AirboatWindow:
         '''
 
         subprocess.run(["osascript", "-e", insert_script])
-        time.sleep(0.15)
+        time.sleep(0.3)
         subprocess.run(["osascript", "-e", click_script])
 
 
